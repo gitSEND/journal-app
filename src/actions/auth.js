@@ -2,15 +2,16 @@ import {
   signInWithPopup,
   createUserWithEmailAndPassword,
   updateProfile,
+  signInWithEmailAndPassword,
 } from 'firebase/auth';
 import { auth, provider } from '../firebase/firebaseConfig';
 import { types } from '../types/types';
 
 export const startLoginEmailPassword = (email, password) => {
   return (dispatch) => {
-    setTimeout(() => {
-      dispatch(login(123, 'pedro'));
-    }, 3500);
+    signInWithEmailAndPassword(auth, email, password).then(({ user }) => {
+      dispatch(login(user.uid, user.displayName));
+    });
   };
 };
 
