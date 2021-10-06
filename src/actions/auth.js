@@ -3,6 +3,7 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
   signInWithEmailAndPassword,
+  signOut,
 } from 'firebase/auth';
 import { auth, provider } from '../firebase/firebaseConfig';
 import { types } from '../types/types';
@@ -53,3 +54,15 @@ export const login = (uid, displayName) => {
     payload: { uid, displayName },
   };
 };
+
+export const startLogout = () => {
+  return async (dispatch) => {
+    await signOut(auth);
+
+    dispatch(logout());
+  };
+};
+
+export const logout = () => ({
+  type: types.logout,
+});
