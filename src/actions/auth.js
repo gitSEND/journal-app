@@ -6,12 +6,22 @@ import {
 } from 'firebase/auth';
 import { auth, provider } from '../firebase/firebaseConfig';
 import { types } from '../types/types';
+import { finishLoading, startLoading } from './ui';
 
 export const startLoginEmailPassword = (email, password) => {
   return (dispatch) => {
-    signInWithEmailAndPassword(auth, email, password).then(({ user }) => {
-      dispatch(login(user.uid, user.displayName));
-    });
+    dispatch(startLoading());
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then(({ user }) => {
+        dispatch(login(user.uid, user.displayName));
+
+        dispatch(finishLoading());
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch(finishLoading());
+      });
   };
 };
 
