@@ -5,6 +5,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
+import Swal from 'sweetalert2';
 import { auth, provider } from '../firebase/firebaseConfig';
 import { types } from '../types/types';
 import { finishLoading, startLoading } from './ui';
@@ -19,9 +20,10 @@ export const startLoginEmailPassword = (email, password) => {
 
         dispatch(finishLoading());
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        console.log(error.code);
         dispatch(finishLoading());
+        Swal.fire('Error', error.code, 'error');
       });
   };
 };
@@ -36,7 +38,7 @@ export const startRegisterWithEmailPassword = (email, password, name) => {
 
         dispatch(login(user.uid, user.displayName));
       })
-      .catch((err) => console.log(err));
+      .catch((error) => Swal.fire('Error', error.code, 'error'));
   };
 };
 
