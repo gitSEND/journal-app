@@ -48,10 +48,7 @@ export const NoteScreen = () => {
 
           {note.url && (
             <div className='note__image'>
-              <img
-                alt='imagen'
-                src='https://img.freepik.com/vector-gratis/paisaje-natural-nocturno-rio-noche-estrellada_104785-54.jpg?size=626&ext=jpg'
-              ></img>
+              <img alt='imagen' src={note.url}></img>
             </div>
           )}
         </form>
