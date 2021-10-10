@@ -1,4 +1,10 @@
-import { addDoc, collection, doc, updateDoc } from '@firebase/firestore';
+import {
+  addDoc,
+  collection,
+  doc,
+  updateDoc,
+  deleteDoc,
+} from '@firebase/firestore';
 import { db } from '../firebase/firebaseConfig';
 import { loadNotes } from '../helpers/loadNotes';
 import { types } from '../types/types';
@@ -98,3 +104,19 @@ export const startUploading = (file) => {
     Swal.close();
   };
 };
+
+export const startDeleting = (id) => {
+  return async (dispatch, getState) => {
+    const uid = getState().auth.uid;
+    const docRef = doc(db, `${uid}/journal/note/${id}`);
+
+    await deleteDoc(docRef);
+
+    dispatch(deleteNote(id));
+  };
+};
+
+export const deleteNote = (id) => ({
+  type: types.notesDelete,
+  payload: id,
+});
