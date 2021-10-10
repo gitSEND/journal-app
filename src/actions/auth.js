@@ -8,6 +8,7 @@ import {
 import Swal from 'sweetalert2';
 import { auth, provider } from '../firebase/firebaseConfig';
 import { types } from '../types/types';
+import { noteLogout } from './note';
 import { finishLoading, startLoading } from './ui';
 
 export const startLoginEmailPassword = (email, password) => {
@@ -62,6 +63,7 @@ export const startLogout = () => {
     await signOut(auth);
 
     dispatch(logout());
+    dispatch(noteLogout());
   };
 };
 
